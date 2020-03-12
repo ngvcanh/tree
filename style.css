@@ -1,0 +1,219 @@
+body {
+  background: var(--dark);
+  color: #323232;
+  font-weight: 300;
+  height: 100vh;
+  margin: 0;
+  font-family: Helvetica neue, roboto;
+}
+
+:root{
+  --tree-line-color: green;
+  --tree-line-width: 1px;
+  --tree-line-style: solid;
+  --tree-spacing: 20px;
+  --tree-radius: 5px;
+  --tree-img-size: 50px;
+  --tree-bgcolor-hover: green;
+  --tree-icon-size: 10px;
+  --tree-icon-line-color: #fff;
+  --tree-data-width : 200px;
+  --tree-data-bgcolor: green;
+  --tree-data-space: 15px;
+  --tree-data-color: #fff;
+}
+
+.tree{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 30px;
+}
+
+.tree ul{
+  list-style: none;
+  position: relative;
+  padding: 0;
+  font-size: 0;
+  margin: 0 auto;
+}
+
+.tree ul li{
+  text-align: center;
+  vertical-align: top;
+}
+
+.tree ul li .tree_info{
+  position: relative;
+  display: inline-block;
+  padding: 5px;
+  border: var(--tree-line-width) var(--tree-line-style) var(--tree-line-color);
+  border-radius: 50%;
+}
+
+.tree .tree_info img{
+  width: var(--tree-img-size);
+  height: var(--tree-img-size);
+  border-radius: 50%;
+  transition: background-color ease 0.5s;
+}
+
+.tree ul ul{
+  padding-top: 20px;
+  display: none;
+}
+
+.tree ul ul::before{
+  content: '';
+  top: 0;
+  left: 50%;
+  border-left: var(--tree-line-width) var(--tree-line-style) var(--tree-line-color);
+  height: 20px;
+  width: 0;
+  position: absolute;
+}
+
+.tree ul ul li{
+  position: relative;
+  padding: var(--tree-spacing) 5px 0 5px;
+  display: inline-block;
+}
+
+.tree ul ul li::before,
+.tree ul ul li::after{
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 0;
+  border-top: var(--tree-line-width) var(--tree-line-style) var(--tree-line-color);
+  top: 0;
+}
+
+.tree ul ul li::before{
+  left: 0;
+}
+
+.tree ul ul li::after{
+  left: 50%;
+  border-left: var(--tree-line-width) var(--tree-line-style) var(--tree-line-color);
+  height: var(--tree-spacing);
+}
+
+.tree ul ul li:first-child::before{
+  border-color: transparent;
+}
+
+.tree ul ul li:first-child::after{
+  border-top-left-radius: var(--tree-radius);
+}
+
+.tree ul ul li:last-child::before{
+  height: var(--tree-spacing);
+  border-right: var(--tree-line-width) var(--tree-line-style) var(--tree-line-color);
+  border-top-right-radius: var(--tree-radius);
+}
+
+.tree ul ul li:last-child::after{
+  border-color: transparent;
+}
+
+.tree .tree_info .tree_icon{
+  position: absolute;
+  display: inline-block;
+  width: var(--tree-icon-size);
+  height: var(--tree-icon-size);
+  border-radius: 2px;
+  background-color: var(--tree-icon-bgcolor);
+  background-color: var(--tree-line-color);
+  bottom: calc(0% - calc(var(--tree-icon-size) / 2));
+  left: calc(50% - calc(var(--tree-icon-size) / 2));
+  cursor: pointer;
+  z-index: 2;
+}
+
+.tree .tree_info .tree_icon::before{
+  content: '';
+  position: absolute;
+  display: inline-block;
+  transform: rotate(45deg);
+  width: calc(var(--tree-icon-size) / 2);
+  height: calc(var(--tree-icon-size) / 2);
+  border-bottom: 1px solid var(--tree-icon-line-color);
+  border-right: 1px solid var(--tree-icon-line-color);
+  border-bottom-right-radius: 2px;
+  top: calc(var(--tree-icon-size) / 5);
+  left: calc(var(--tree-icon-size) / 4);
+}
+
+.tree .tree_info label{
+  margin: 0;
+  cursor: pointer;
+}
+
+.tree .tree_info input[type=checkbox]{
+  display: none;
+}
+
+.tree .tree_info .tree_data{
+  /* display: none; */
+  display: block;
+  width: 0;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: var(--tree-data-bgcolor);
+  height: auto;
+  margin-left: 15px;
+  transition: all ease 0.5s;
+  /* z-index: 3; */
+}
+
+.tree .tree_info .tree_data::before{
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border-right: var(--tree-data-space) solid var(--tree-data-bgcolor);
+  border-top: calc(calc(var(--tree-data-space) / 2) + 2) solid transparent;
+  border-bottom: calc(calc(var(--tree-data-space) / 2) + 2) solid transparent;
+  left: calc(0% - var(--tree-data-space));
+  top: var(--tree-data-space);
+}
+
+.tree .tree_info .tree_data div{
+  height: 25px;
+  line-height: 25px;
+  color: var(--tree-data-color);
+  font-size: 13px;
+  text-align: left;
+  padding: 0 10px;
+  opacity: 0;
+  width: 0;
+  transition: all ease 0.5s;
+}
+
+.tree .tree_info .tree_data div a{
+  color: yellow;
+}
+
+.tree .tree_info input[type=checkbox]:hover + .tree_data{
+  display: block;
+  z-index: 2;
+  width: var(--tree-data-width);
+}
+
+.tree .tree_info input[type=checkbox]:hover + .tree_data div{
+  opacity: 1;
+  width: auto;
+}
+
+.tree li .tree_info:hover img,
+.tree li .tree_info:hover + ul .tree_info img{
+  background-color: var(--tree-bgcolor-hover);
+}
+
+.tree ul ul.active{
+  display: block;
+}
