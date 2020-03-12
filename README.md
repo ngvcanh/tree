@@ -1,2 +1,2 @@
 # tree
-Vertical Tree HTML
+Horizontal Tree HTML
